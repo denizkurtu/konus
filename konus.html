@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h2>Konuş, seni yazayım!</h2>
+    <div id="result" style="font-size:24px; color:green;"></div>
+
+    <script>
+      var recognition = new webkitSpeechRecognition();
+      recognition.continuous = true;
+      recognition.interimResults = true;
+      recognition.lang = "tr-TR";
+
+      recognition.onresult = function(event) {
+        var text = "";
+        for (var i = event.resultIndex; i < event.results.length; ++i) {
+          text += event.results[i][0].transcript;
+        }
+        document.getElementById("result").innerHTML = text;
+
+        // Android'e veri gönder (Kodular WebViewString olarak alır)
+        window.AppInventor.setWebViewString(text);
+      };
+
+      recognition.start();
+    </script>
+  </body>
+</html>
